@@ -2,10 +2,67 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mi Hola Mundo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hola Mundo Animado</title>
+    <style>
+        /* Estilos generales y colores */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Contenedor con animación de entrada */
+        .card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            
+            /* Animación de aparición suave */
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            /* Animación de flotado suave */
+            animation: float 3s ease-in-out infinite;
+        }
+
+        p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Definición de animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
 </head>
 <body>
-    <h1>¡Hola Mundo! </h1>
-    <p>Esta página se despliega automáticamente desde GitHub.</p>
+
+    <div class="card">
+        <h1>¡Hola Mundo! </h1>
+        <p>Desplegado automáticamente desde GitHub</p>
+    </div>
+
 </body>
 </html>
