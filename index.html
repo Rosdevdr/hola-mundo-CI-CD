@@ -3,66 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hola Mundo Animado</title>
+    <title>Mi Mini-Ecommerce | Hola Mundo</title>
     <style>
-        /* Estilos generales y colores */
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: white;
-            overflow: hidden;
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --dark: #1e293b;
+            --light: #f8fafc;
         }
 
-        /* Contenedor con animación de entrada */
-        .card {
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        /* Header Animado */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Sección Hola Mundo */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 1.2s ease-in;
+        }
+
+        /* Grid de Productos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Tarjeta de Producto con Hover */
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 150px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-buy {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-buy:hover {
+            background: var(--secondary);
+        }
+
+        /* Animaciones */
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        footer {
             text-align: center;
             padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            
-            /* Animación de aparición suave */
-            animation: fadeIn 1.5s ease-out;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            /* Animación de flotado suave */
-            animation: float 3s ease-in-out infinite;
-        }
-
-        p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        /* Definición de animaciones */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            color: #64748b;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>¡Hola Mundo! </h1>
-        <p>Desplegado automáticamente desde GitHub</p>
+    <header>
+        <h1>🚀 TechStore: Hola Mundo Edition</h1>
+        <p>Desplegado automáticamente con CI/CD de GitHub</p>
+    </header>
+
+    <div class="container">
+        <section class="welcome-section">
+            <h2>¡Bienvenido a mi demo! 👋</h2>
+            <p>Este es un sitio estático simulando un e-commerce para tu tarea.</p>
+        </section>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">💻</div>
+                <h3>Laptop Dev Pro</h3>
+                <p>Perfecta para compilar tus "Hola Mundo".</p>
+                <p><strong>$1,200.00</strong></p>
+                <button class="btn-buy" onclick="alert('¡Producto añadido al carrito!')">Comprar</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">⌨️</div>
+                <h3>Teclado RGB</h3>
+                <p>Escribe código con más estilo y luces.</p>
+                <p><strong>$85.00</strong></p>
+                <button class="btn-buy" onclick="alert('¡Producto añadido al carrito!')">Comprar</button>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">☕</div>
+                <h3>Taza de Café</h3>
+                <p>Combustible esencial para programadores.</p>
+                <p><strong>$15.00</strong></p>
+                <button class="btn-buy" onclick="alert('¡Producto añadido al carrito!')">Comprar</button>
+            </div>
+        </div>
     </div>
+
+    <footer>
+        &copy; 2026 - Mi Repositorio de GitHub | <a href="https://github.com" target="_blank" style="color: var(--primary);">Ver código fuente</a>
+    </footer>
 
 </body>
 </html>
