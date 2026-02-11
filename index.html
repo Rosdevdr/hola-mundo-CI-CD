@@ -3,157 +3,662 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Mini-Ecommerce | Hola Mundo</title>
+    <title>TechStore | Next Level Shopping</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --primary: #009B4D;
-            --secondary: #eeb532;
-            --dark: #1e293b;
-            --light: #f8fafc;
+            --electric-violet: #8B5CF6;
+            --deep-purple: #6D28D9;
+            --coral-pink: #FF6B9D;
+            --midnight: #0F172A;
+            --slate: #1E293B;
+            --cloud: #F1F5F9;
+            --gold: #FCD34D;
+            --mint: #6EE7B7;
         }
 
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-            margin: 0;
-            background-color: var(--light);
-            color: var(--dark);
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--midnight);
+            color: var(--cloud);
+            overflow-x: hidden;
         }
 
-        /* Header Animado */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            animation: slideDown 0.8s ease-out;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        /* Sección Hola Mundo */
-        .welcome-section {
-            text-align: center;
-            margin-bottom: 3rem;
-            animation: fadeIn 1.2s ease-in;
-        }
-
-        /* Grid de Productos */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        /* Tarjeta de Producto con Hover */
-        .product-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-        }
-
-        .product-image {
+        /* Animated Background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 150px;
-            background: #e2e8f0;
-            border-radius: 10px;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, var(--midnight) 0%, var(--slate) 50%, var(--midnight) 100%);
+        }
+
+        .bg-gradient::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--electric-violet) 0%, transparent 70%);
+            top: -250px;
+            right: -100px;
+            opacity: 0.3;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .bg-gradient::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--coral-pink) 0%, transparent 70%);
+            bottom: -200px;
+            left: -100px;
+            opacity: 0.2;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -50px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--electric-violet), var(--coral-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--cloud);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--electric-violet);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--coral-pink);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 5% 4rem;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
             margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--cloud) 0%, var(--electric-violet) 50%, var(--coral-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(241, 245, 249, 0.7);
+            margin-bottom: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid var(--electric-violet);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Products Section */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--electric-violet), var(--coral-pink));
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Product Card - Next Level */
+        .product-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 0;
+            overflow: hidden;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--electric-violet), var(--coral-pink));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--electric-violet);
+            box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.4);
+        }
+
+        .product-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .product-image {
+            height: 250px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(255, 107, 157, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .product-card:hover .product-image::before {
+            left: 100%;
+        }
+
+        .product-emoji {
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-emoji {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .product-content {
+            padding: 2rem;
+        }
+
+        .product-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(110, 231, 183, 0.2);
+            color: var(--mint);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.8rem;
+            color: var(--cloud);
+        }
+
+        .product-card p {
+            color: rgba(241, 245, 249, 0.7);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold), var(--coral-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .btn-buy {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--electric-violet), var(--deep-purple));
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
+            padding: 1rem 2rem;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.3s;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .btn-buy::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-buy:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-buy:hover {
-            background: var(--secondary);
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.6);
         }
 
-        /* Animaciones */
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
+        .btn-buy span {
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+            padding: 3rem;
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
         }
 
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--electric-violet), var(--coral-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(241, 245, 249, 0.7);
+            font-size: 1rem;
+        }
+
+        /* Footer */
         footer {
             text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-            font-size: 0.9rem;
-            color: #64748b;
+            padding: 3rem 5%;
+            margin-top: 6rem;
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        footer p {
+            color: rgba(241, 245, 249, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: var(--electric-violet);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--coral-pink);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--electric-violet), var(--deep-purple));
+            color: white;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1000;
+            font-weight: 600;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="bg-gradient"></div>
 
-    <header>
-        <h1>TechStore: Hola Mundo Edition</h1>
-        <p>Desplegado automáticamente con CI/CD de GitHub</p>
-    </header>
+    <nav>
+        <div class="logo">TechStore</div>
+        <ul class="nav-links">
+            <li><a href="#products">Productos</a></li>
+            <li><a href="#about">Nosotros</a></li>
+            <li><a href="#contact">Contacto</a></li>
+            <li>
+                <div class="cart-icon" onclick="showToast('Carrito próximamente disponible')">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-badge">✨ Deployed with CI/CD Pipeline</div>
+        <h1>El Futuro del<br>Shopping Tech</h1>
+        <p>// Código elegante, productos excepcionales</p>
+    </section>
 
     <div class="container">
-        <section class="welcome-section">
-            <h2>¡Bienvenido a mi demo! 👋</h2>
-            <p>Este es un sitio estático simulando un e-commerce que muestra diferentes productos.</p>
-        </section>
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number">1.2K+</span>
+                <span class="stat-label">Productos</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">98%</span>
+                <span class="stat-label">Satisfacción</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Soporte</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">50K+</span>
+                <span class="stat-label">Clientes</span>
+            </div>
+        </div>
 
+        <h2 class="section-title" id="products">Productos Destacados</h2>
+        
         <div class="products-grid">
             <div class="product-card">
-                <div class="product-image">💻</div>
-                <h3>Laptop Dev Pro</h3>
-                <p>Perfecta para compilar tus "Hola Mundo".</p>
-                <p><strong>$1,200.00</strong></p>
-                <button class="btn-buy" onclick="alert('¡Producto añadido al carrito!')">Comprar</button>
+                <div class="product-image">
+                    <span class="product-emoji">💻</span>
+                </div>
+                <div class="product-content">
+                    <span class="product-tag">Premium</span>
+                    <h3>Laptop Dev Pro</h3>
+                    <p>Potencia extrema para compilar, ejecutar y dominar cada línea de código. Diseñada para desarrolladores exigentes.</p>
+                    <div class="product-footer">
+                        <span class="price">$1,200</span>
+                        <button class="btn-buy" onclick="addToCart('Laptop Dev Pro', 1200)">
+                            <span>Agregar</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div class="product-card">
-                <div class="product-image">⌨️</div>
-                <h3>Teclado RGB</h3>
-                <p>Escribe código con más estilo y luces.</p>
-                <p><strong>$85.00</strong></p>
-                <button class="btn-buy" onclick="alert('¡Producto añadido al carrito!')">Comprar</button>
+                <div class="product-image">
+                    <span class="product-emoji">⌨️</span>
+                </div>
+                <div class="product-content">
+                    <span class="product-tag">Hot Sale</span>
+                    <h3>Teclado RGB Elite</h3>
+                    <p>Switches mecánicos premium, iluminación personalizable y un diseño que eleva tu setup al siguiente nivel.</p>
+                    <div class="product-footer">
+                        <span class="price">$85</span>
+                        <button class="btn-buy" onclick="addToCart('Teclado RGB Elite', 85)">
+                            <span>Agregar</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div class="product-card">
-                <div class="product-image">☕</div>
-                <h3>Taza de Café</h3>
-                <p>Combustible esencial para programadores.</p>
-                <p><strong>$15.00</strong></p>
-                <button class="btn-buy" onclick="alert('¡Producto añadido al carrito!')">Comprar</button>
+                <div class="product-image">
+                    <span class="product-emoji">☕</span>
+                </div>
+                <div class="product-content">
+                    <span class="product-tag">Bestseller</span>
+                    <h3>Taza Developer</h3>
+                    <p>El combustible esencial para sesiones de código nocturnas. Diseño ergonómico y capacidad optimizada.</p>
+                    <div class="product-footer">
+                        <span class="price">$15</span>
+                        <button class="btn-buy" onclick="addToCart('Taza Developer', 15)">
+                            <span>Agregar</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 - Mi Repositorio de GitHub | <a href="https://github.com/Rosdevdr" target="_blank" style="color: var(--primary);">Ver código fuente</a>
+        <p>&copy; 2026 TechStore - Innovación sin límites</p>
+        <p>
+            <a href="https://github.com/Rosdevdr" target="_blank">
+                🚀 View Source on GitHub
+            </a>
+        </p>
     </footer>
 
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let cartItems = 0;
+
+        function addToCart(productName, price) {
+            cartItems++;
+            document.getElementById('cartCount').textContent = cartItems;
+            showToast(`✓ ${productName} añadido al carrito ($${price})`);
+            
+            // Animate cart icon
+            const cartIcon = document.querySelector('.cart-icon');
+            cartIcon.style.animation = 'none';
+            setTimeout(() => {
+                cartIcon.style.animation = 'pulse 0.5s ease';
+            }, 10);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
